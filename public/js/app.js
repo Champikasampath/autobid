@@ -30232,7 +30232,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.$ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
-new _item__WEBPACK_IMPORTED_MODULE_0__["default"]().display();
+new _item__WEBPACK_IMPORTED_MODULE_0__["default"]().displayOnLoad();
 
 /***/ }),
 
@@ -30305,15 +30305,24 @@ var Item = /*#__PURE__*/function () {
   }
 
   _createClass(Item, [{
-    key: "display",
-    value: function display() {
+    key: "displayOnLoad",
+    value: function displayOnLoad() {
       var self = this;
       $(document).ready(function () {
-        self.getItems(1, 'test').then(function (data) {
+        self.getItems(1, '').then(function (data) {
           var temp = self.getProcessedData(data);
           $('.item-gallery').html(temp);
+          self.paginate(data);
         });
       });
+    }
+  }, {
+    key: "paginate",
+    value: function paginate(data) {
+      var paginateTemp = data.links.map(function (link) {
+        return "<a class=\"active-".concat(link.active, "\" href=\"").concat(link.url, "\">").concat(link.label, "</a>");
+      });
+      $('.pagination-links').html(paginateTemp.join());
     }
   }, {
     key: "getProcessedData",

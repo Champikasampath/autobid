@@ -2,17 +2,23 @@ import Search from './search'
 
 export default class Item {
 
-    display() {
+    displayOnLoad() {
         let self = this;
         $(document).ready(function () {
-            self.getItems(1, 'test').then(function (data) {
+            self.getItems(1, '').then(function (data) {
                 let temp = self.getProcessedData(data);
                 $('.item-gallery').html(temp);
+                self.paginate(data);
             });
         })
     }
 
-
+    paginate(data) {
+        let paginateTemp = data.links.map(link => {
+           return `<a class="active-${ link.active }" href="${ link.url }">${ link.label }</a>`
+        });
+        $('.pagination-links').html(paginateTemp.join());
+    }
 
     getProcessedData(items) {
         let temp = '';

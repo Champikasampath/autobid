@@ -12,4 +12,7 @@
     <div class="item-gallery">
         <span>Nothing to display</span>
     </div>
+    <div class="pagination-links">
+
+    </div>
 @endsection
