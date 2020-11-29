@@ -1,10 +1,6 @@
 export default class Search {
-
-    constructor(offset) {
-        this.offset = offset;
-    }
-
-    getData(path, start, term) {
-        return fetch(path + '?term=' + term + '&start=' + start + '&length=10');
+    getData(path, page, term) {
+        console.log(path);
+        return fetch(path + 'page=' + page + '&term=' + term);
     }
 }

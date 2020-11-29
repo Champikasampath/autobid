@@ -20,7 +20,7 @@ class ItemRepository
      *
      * @return Item[]|\Illuminate\Database\Eloquent\Collection|string
      */
-    public function getAll($start = 0, $length = 10, $term = null)
+    public function getAll($length = 10, $term = null)
     {
         try {
             $query = item::query();
@@ -30,13 +30,19 @@ class ItemRepository
                 $query->where('description', 'LIKE', "%$term%");
             }
 
-            if($length != 0) {
-                $query->limit($length);
-                $query->offset($start);
-            }
-            return $query->get();
+            return $query->paginate($length);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getCount()
+    {
+        $all = item::all();
+        $count = $all->count();
+        return $count;
     }
 }

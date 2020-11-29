@@ -30309,7 +30309,7 @@ var Item = /*#__PURE__*/function () {
     value: function display() {
       var self = this;
       $(document).ready(function () {
-        self.getItems(10, 0, '').then(function (data) {
+        self.getItems(1, '').then(function (data) {
           var temp = self.getProcessedData(data);
           $('.item-gallery').html(temp);
         });
@@ -30320,21 +30320,21 @@ var Item = /*#__PURE__*/function () {
     value: function getProcessedData(items) {
       var temp = '';
 
-      for (var _i = 0, _Object$entries = Object.entries(items); _i < _Object$entries.length; _i++) {
+      for (var _i = 0, _Object$entries = Object.entries(items.data); _i < _Object$entries.length; _i++) {
         var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
             key = _Object$entries$_i[0],
             item = _Object$entries$_i[1];
 
-        temp += "<div class=\"item-wrapper\">\n                <img src=\"".concat(item.thumbnail, "\" alt=\"product\">\n                <span>").concat(item.description, "</span>\n                <span>").concat(item.min_price, "</span>\n            </div>");
+        temp += "<div class=\"item-wrapper\">\n                <img src=\"".concat(item.thumbnail, "\" alt=\"product\">\n                <span>").concat(item.title, "</span>\n                <span>").concat(item.description, "</span>\n                <span>").concat(item.min_price, "</span>\n            </div>");
       }
 
       return temp;
     }
   }, {
     key: "getItems",
-    value: function getItems(Offset, start, term) {
-      var path = '/api/items';
-      return new _search__WEBPACK_IMPORTED_MODULE_0__["default"](Offset).getData(path, start, term).then(function (res) {
+    value: function getItems(page, term) {
+      var path = '/api/items/';
+      return new _search__WEBPACK_IMPORTED_MODULE_0__["default"]().getData(path, page, term).then(function (res) {
         return res.json();
       }).then(function (items) {
         return items;
@@ -30366,16 +30366,15 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var Search = /*#__PURE__*/function () {
-  function Search(offset) {
+  function Search() {
     _classCallCheck(this, Search);
-
-    this.offset = offset;
   }
 
   _createClass(Search, [{
     key: "getData",
-    value: function getData(path, start, term) {
-      return fetch(path + '?term=' + term + '&start=' + start + '&length=10');
+    value: function getData(path, page, term) {
+      console.log(path);
+      return fetch(path + 'page=' + page + '&term=' + term);
     }
   }]);
 

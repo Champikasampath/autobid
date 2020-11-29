@@ -30,8 +30,8 @@ class Item extends Core
      *
      * @return mixed
      */
-    public function getAll($start = 0, $length = 10, $term = '')
+    public function getAll($length = 10, $term = '')
     {
-        return $this->repository->getAll($start, $length, $term);
+        return $this->repository->getAll($length, $term);
     }
 }
