@@ -5,12 +5,14 @@ export default class Item {
     display() {
         let self = this;
         $(document).ready(function () {
-            self.getItems(1, '').then(function (data) {
+            self.getItems(1, 'test').then(function (data) {
                 let temp = self.getProcessedData(data);
                 $('.item-gallery').html(temp);
             });
         })
     }
+
+
 
     getProcessedData(items) {
         let temp = '';

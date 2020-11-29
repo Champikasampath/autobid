@@ -27,7 +27,7 @@ class ItemRepository
 
             if(!empty($term)) {
                 $query->where('title', 'LIKE', "%$term%");
-                $query->where('description', 'LIKE', "%$term%");
+                $query->orWhere('description', 'LIKE', "%$term%");
             }
 
             return $query->paginate($length);

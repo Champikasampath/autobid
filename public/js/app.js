@@ -30309,7 +30309,7 @@ var Item = /*#__PURE__*/function () {
     value: function display() {
       var self = this;
       $(document).ready(function () {
-        self.getItems(1, '').then(function (data) {
+        self.getItems(1, 'test').then(function (data) {
           var temp = self.getProcessedData(data);
           $('.item-gallery').html(temp);
         });
@@ -30373,8 +30373,7 @@ var Search = /*#__PURE__*/function () {
   _createClass(Search, [{
     key: "getData",
     value: function getData(path, page, term) {
-      console.log(path);
-      return fetch(path + 'page=' + page + '&term=' + term);
+      return fetch(path + '?term=' + term + '&page=' + page);
     }
   }]);
 

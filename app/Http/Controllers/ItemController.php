@@ -20,7 +20,6 @@ class ItemController extends Controller
     public function getAll(Request $request)
     {
         $term = $request->get('term');
-
         return Item::init()->getAll(10, $term);
     }
 }
