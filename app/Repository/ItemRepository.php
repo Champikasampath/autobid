@@ -13,6 +13,15 @@ use App\Models\Item;
 
 class ItemRepository
 {
+    public function get($id)
+    {
+        try {
+            return Item::find($id);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
     /**
      * @param int $start
      * @param int $length

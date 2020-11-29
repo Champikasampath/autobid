@@ -22,4 +22,11 @@ class ItemController extends Controller
         $term = $request->get('term');
         return Item::init()->getAll(10, $term);
     }
+
+    public function displayItemDetailsPage($id)
+    {
+        $item = Item::init()->get($id);
+        view()->share('item', $item);
+        return view('item.single');
+    }
 }

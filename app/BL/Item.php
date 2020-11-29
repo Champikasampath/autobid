@@ -23,6 +23,11 @@ class Item extends Core
         parent::__construct(app(ItemRepository::class));
     }
 
+    public function get($id)
+    {
+        return $this->repository->get($id);
+    }
+
     /**
      * @param int $start
      * @param int $length
