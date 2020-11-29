@@ -8,7 +8,6 @@
 
 namespace App\BL;
 
-
 use App\Repository\ItemRepository;
 
 class Item extends Core
@@ -19,13 +18,20 @@ class Item extends Core
      *
      * @param $repository
      */
-    public function __construct(ItemRepository $repository)
+    public function __construct()
     {
-        parent::__construct($repository);
+        parent::__construct(app(ItemRepository::class));
     }
 
+    /**
+     * @param int $start
+     * @param int $length
+     * @param string $term
+     *
+     * @return mixed
+     */
     public function getAll($start = 0, $length = 10, $term = '')
     {
-        
+        return $this->repository->getAll($start, $length, $term);
     }
 }

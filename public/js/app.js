@@ -30325,7 +30325,7 @@ var Item = /*#__PURE__*/function () {
             key = _Object$entries$_i[0],
             item = _Object$entries$_i[1];
 
-        temp += "<div class=\"item-wrapper\">\n                <img src=\"".concat(item.thumbnail, "\" alt=\"product\">\n                <span>").concat(item.description, "</span>\n                <span>").concat(item.bid, "</span>\n            </div>");
+        temp += "<div class=\"item-wrapper\">\n                <img src=\"".concat(item.thumbnail, "\" alt=\"product\">\n                <span>").concat(item.description, "</span>\n                <span>").concat(item.min_price, "</span>\n            </div>");
       }
 
       return temp;
@@ -30375,7 +30375,7 @@ var Search = /*#__PURE__*/function () {
   _createClass(Search, [{
     key: "getData",
     value: function getData(path, start, term) {
-      return fetch(path + '?term=' + term + '&start=' + start);
+      return fetch(path + '?term=' + term + '&start=' + start + '&length=10');
     }
   }]);
 

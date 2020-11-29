@@ -14,10 +14,29 @@ use App\Models\Item;
 class ItemRepository
 {
     /**
-     * @return Item[]|\Illuminate\Database\Eloquent\Collection
+     * @param int $start
+     * @param int $length
+     * @param string $term
+     *
+     * @return Item[]|\Illuminate\Database\Eloquent\Collection|string
      */
-    public function getAll()
+    public function getAll($start = 0, $length = 10, $term = null)
     {
-        return Item::all();
+        try {
+            $query = item::query();
+
+            if(!empty($term)) {
+                $query->where('title', 'LIKE', "%$term%");
+                $query->where('description', 'LIKE', "%$term%");
+            }
+
+            if($length != 0) {
+                $query->limit($length);
+                $query->offset($start);
+            }
+            return $query->get();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

@@ -5,6 +5,6 @@ export default class Search {
     }
 
     getData(path, start, term) {
-        return fetch(path + '?term=' + term + '&start=' + start);
+        return fetch(path + '?term=' + term + '&start=' + start + '&length=10');
     }
 }

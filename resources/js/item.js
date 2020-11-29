@@ -9,23 +9,18 @@ export default class Item {
                 let temp = self.getProcessedData(data);
                 $('.item-gallery').html(temp);
             });
-
         })
-
     }
 
     getProcessedData(items) {
-
         let temp = '';
-
         for(const [key, item] of Object.entries(items)) {
             temp += `<div class="item-wrapper">
                 <img src="${item.thumbnail}" alt="product">
                 <span>${ item.description }</span>
-                <span>${ item.bid }</span>
+                <span>${ item.min_price }</span>
             </div>`
         }
-
         return temp;
     }
 
