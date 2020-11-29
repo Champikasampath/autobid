@@ -13,6 +13,9 @@ use App\Models\Item;
 
 class ItemRepository
 {
+    /**
+     * @return Item[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function getAll()
     {
         return Item::all();

@@ -21,15 +21,11 @@ class Item extends Core
      */
     public function __construct(ItemRepository $repository)
     {
-
+        parent::__construct($repository);
     }
 
-    /**
-     * @return mixed
-     */
-    public static function init()
+    public function getAll($start = 0, $length = 10, $term = '')
     {
-        $class = get_called_class();
-        return new $class;
+        
     }
 }
