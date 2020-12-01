@@ -1,11 +1,27 @@
 import Search from './search'
 
+const API_PATH = '/api/items';
+
 export default class Item {
 
-    displayOnLoad() {
+    displayBindOnLoad() {
         let self = this;
         $(document).ready(function () {
-            self.getItems(1, '').then(function (data) {
+            self.getItems(API_PATH + '?page=1', '').then(function (data) {
+                let temp = self.getProcessedData(data);
+                $('.item-gallery').html(temp);
+                self.paginate(data);
+                self.displayOnAction()
+            });
+        })
+    }
+
+    displayOnAction() {
+        let self = this;
+        $('.pagination-links').on('click','button',function (e) {
+            let elem = $(this);
+            let path = elem.attr('data-path')
+            self.getItems(path, '').then(function (data) {
                 let temp = self.getProcessedData(data);
                 $('.item-gallery').html(temp);
                 self.paginate(data);
@@ -15,9 +31,11 @@ export default class Item {
 
     paginate(data) {
         let paginateTemp = data.links.map(link => {
-           return `<a class="active-${ link.active }" href="${ link.url }">${ link.label }</a>`
+            if (link.url) {
+                return `<button class="active-${ link.active } pagination-link-a" data-path="${ link.url }">${ link.label }</button>`
+            }
         });
-        $('.pagination-links').html(paginateTemp.join());
+        $('.pagination-links').html(paginateTemp.join(""));
     }
 
     getProcessedData(items) {
@@ -33,9 +51,8 @@ export default class Item {
         return temp;
     }
 
-    getItems(page, term) {
-        let path = '/api/items/';
-        return (new Search()).getData(path, page, term).then(res => res.json()).then(items => items);
+    getItems(path, term) {
+        return (new Search()).getData(path, term).then(res => res.json()).then(items => items);
     }
 
 

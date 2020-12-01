@@ -3,4 +3,5 @@ window.$ = require('jquery');
 
 import Item from './item';
 
-(new Item()).displayOnLoad();
+(new Item()).displayBindOnLoad();
+// (new Item()).displayOnAction();

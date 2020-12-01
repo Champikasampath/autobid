@@ -30232,7 +30232,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.$ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
-new _item__WEBPACK_IMPORTED_MODULE_0__["default"]().displayOnLoad();
+new _item__WEBPACK_IMPORTED_MODULE_0__["default"]().displayBindOnLoad(); // (new Item()).displayOnAction();
 
 /***/ }),
 
@@ -30298,6 +30298,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
+var API_PATH = '/api/items';
 
 var Item = /*#__PURE__*/function () {
   function Item() {
@@ -30305,11 +30306,26 @@ var Item = /*#__PURE__*/function () {
   }
 
   _createClass(Item, [{
-    key: "displayOnLoad",
-    value: function displayOnLoad() {
+    key: "displayBindOnLoad",
+    value: function displayBindOnLoad() {
       var self = this;
       $(document).ready(function () {
-        self.getItems(1, '').then(function (data) {
+        self.getItems(API_PATH + '?page=1', '').then(function (data) {
+          var temp = self.getProcessedData(data);
+          $('.item-gallery').html(temp);
+          self.paginate(data);
+          self.displayOnAction();
+        });
+      });
+    }
+  }, {
+    key: "displayOnAction",
+    value: function displayOnAction() {
+      var self = this;
+      $('.pagination-links').on('click', 'button', function (e) {
+        var elem = $(this);
+        var path = elem.attr('data-path');
+        self.getItems(path, '').then(function (data) {
           var temp = self.getProcessedData(data);
           $('.item-gallery').html(temp);
           self.paginate(data);
@@ -30320,9 +30336,11 @@ var Item = /*#__PURE__*/function () {
     key: "paginate",
     value: function paginate(data) {
       var paginateTemp = data.links.map(function (link) {
-        return "<a class=\"active-".concat(link.active, "\" href=\"").concat(link.url, "\">").concat(link.label, "</a>");
+        if (link.url) {
+          return "<button class=\"active-".concat(link.active, " pagination-link-a\" data-path=\"").concat(link.url, "\">").concat(link.label, "</button>");
+        }
       });
-      $('.pagination-links').html(paginateTemp.join());
+      $('.pagination-links').html(paginateTemp.join(""));
     }
   }, {
     key: "getProcessedData",
@@ -30341,9 +30359,8 @@ var Item = /*#__PURE__*/function () {
     }
   }, {
     key: "getItems",
-    value: function getItems(page, term) {
-      var path = '/api/items/';
-      return new _search__WEBPACK_IMPORTED_MODULE_0__["default"]().getData(path, page, term).then(function (res) {
+    value: function getItems(path, term) {
+      return new _search__WEBPACK_IMPORTED_MODULE_0__["default"]().getData(path, term).then(function (res) {
         return res.json();
       }).then(function (items) {
         return items;
@@ -30381,8 +30398,8 @@ var Search = /*#__PURE__*/function () {
 
   _createClass(Search, [{
     key: "getData",
-    value: function getData(path, page, term) {
-      return fetch(path + '?term=' + term + '&page=' + page);
+    value: function getData(path, term) {
+      return fetch(path + '&term=' + term);
     }
   }]);
 
