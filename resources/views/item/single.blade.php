@@ -3,10 +3,9 @@
 @section('title', 'Listing')
 
 @section('content')
+
     <div class="single-item">
         <span>Title : </span> <span> {{ $item->title }}</span>
-
-
         <div class="row">
 
             <div class="col-md-8">
@@ -14,7 +13,7 @@
             </div>
 
             <div class="col-md-4">
-                <!-- <h3 class="my-3">Project Description</h3> -->
+
                 <p>{{ $item->description }}</p>
                 <p><strong>Min Price: {{ $item->min_price }}</strong></p>
                 <p><strong>Current Highest Bid: 120</strong></p>
@@ -26,7 +25,5 @@
 
             </div>
         </div>
-
-
     </div>
 @endsection
