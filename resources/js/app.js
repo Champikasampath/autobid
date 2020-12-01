@@ -2,6 +2,7 @@ require('./bootstrap');
 window.$ = require('jquery');
 
 import Item from './item';
+import Bid from './bid';
 
 (new Item()).displayBindOnLoad();
-// (new Item()).displayOnAction();
+(new Bid()).init();

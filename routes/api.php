@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/items', [\App\Http\Controllers\ItemController::class, 'getAll']);
+Route::post('/bid', [\App\Http\Controllers\BidController::class, 'placeBid']);

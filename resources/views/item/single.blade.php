@@ -16,10 +16,12 @@
 
                 <p>{{ $item->description }}</p>
                 <p><strong>Min Price: {{ $item->min_price }}</strong></p>
-                <p><strong>Current Highest Bid: 120</strong></p>
+                <p><strong>Current Highest Bid: {{ $item->highest_bid }}</strong></p>
 
-                <form action="/item/bid" method="post" required>
+                <form method="post" id="bidding">
                     <input type="text" class="bid" name="bid" required>
+                    <input type="hidden" name="item_id" class="item_id" value="{{ $item->id }}">
+                    {{--TODO: replace hardcoded user id--}}
                     <input type="submit" class="submit-bid" value="Bid">
                 </form>
 

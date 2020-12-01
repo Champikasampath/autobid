@@ -16,18 +16,18 @@ class ItemRepository
     public function get($id)
     {
         try {
-            return Item::find($id);
+            return Item::with('bids')->where('id', $id)->first();
         } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
 
     /**
-     * @param int $start
      * @param int $length
-     * @param string $term
+     * @param null $term
      *
-     * @return Item[]|\Illuminate\Database\Eloquent\Collection|string
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @throws \Exception
      */
     public function getAll($length = 10, $term = null)
     {
@@ -41,7 +41,7 @@ class ItemRepository
 
             return $query->paginate($length);
         } catch (\Exception $e) {
-            return $e->getMessage();
+            throw new \Exception($e->getMessage());
         }
     }
 

@@ -30228,11 +30228,92 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./resources/js/item.js");
+/* harmony import */ var _bid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bid */ "./resources/js/bid.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.$ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
-new _item__WEBPACK_IMPORTED_MODULE_0__["default"]().displayBindOnLoad(); // (new Item()).displayOnAction();
+
+new _item__WEBPACK_IMPORTED_MODULE_0__["default"]().displayBindOnLoad();
+new _bid__WEBPACK_IMPORTED_MODULE_1__["default"]().init();
+
+/***/ }),
+
+/***/ "./resources/js/bid.js":
+/*!*****************************!*\
+  !*** ./resources/js/bid.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Item; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var API_PATH = '/api/bid/';
+
+var Item = /*#__PURE__*/function () {
+  function Item() {
+    _classCallCheck(this, Item);
+  }
+
+  _createClass(Item, [{
+    key: "init",
+
+    /**
+     * initiate
+     */
+    value: function init() {
+      this.bidOnSubmit();
+    }
+    /**
+     * bind on submit event for bidding
+     */
+
+  }, {
+    key: "bidOnSubmit",
+    value: function bidOnSubmit() {
+      var self = this;
+      $('#bidding').submit(function (e) {
+        e.preventDefault();
+        var bid = $('.bid').val();
+        var item_id = $('.item_id').val();
+        var data = {
+          'bid': bid,
+          'item_id': item_id
+        };
+        return self.ajaxRequest(data);
+      });
+    }
+    /**
+     * trigger ajax
+     * @param data
+     * @returns {Promise<Response>}
+     */
+
+  }, {
+    key: "ajaxRequest",
+    value: function ajaxRequest(data) {
+      return fetch(API_PATH, {
+        method: 'POST',
+        // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+    }
+  }]);
+
+  return Item;
+}();
+
+
 
 /***/ }),
 

@@ -81,8 +81,6 @@ export default class Item {
       </div>`
         }
 
-
-
         return temp;
     }
 
