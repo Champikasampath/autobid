@@ -25,7 +25,7 @@ export default class Item {
      */
     displayOnClick() {
         let self = this;
-        $('.pagination-links').on('click','button',function (e) {
+        $('.pagination-links').on('click', 'button', function (e) {
             let elem = $(this);
             let path = elem.attr('data-path')
             self.getItems(path, '').then(function (data) {
@@ -56,13 +56,20 @@ export default class Item {
      */
     getProcessedData(items) {
         let temp = '';
-        for(const [key, item] of Object.entries(items.data)) {
-            temp += `<a href="${SINGLE_ITEM + item.id}"><div class="item-wrapper">
-                <img src="${item.thumbnail}" alt="product">
-                <span>${ item.title }</span>
-                <span>${ item.description }</span>
-                <span>${ item.min_price }</span>
-            </div></a>`
+        for (const [key, item] of Object.entries(items.data)) {
+            temp += `<div class="col-md-3 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="${item.thumbnail}" alt="${ item.title }">
+          <div class="card-body">
+            <h4 class="card-title">${ item.title }</h4>
+            <p class="card-text">${ item.description }</p>
+            <p class="card-text"><strong>Price: ${ item.min_price }</strong></p>
+          </div>
+          <div class="card-footer">
+            <a href="${SINGLE_ITEM + item.id}" class="btn btn-primary">Find Out More!</a>
+          </div>
+        </div>
+      </div>`
         }
         return temp;
     }
