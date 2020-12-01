@@ -17,4 +17,8 @@ Route::get('/', [\App\Http\Controllers\ItemController::class, 'index']);
 
 Route::get('/item/{id}', [\App\Http\Controllers\ItemController::class, 'displayItemDetailsPage']);
 
+Route::get('/profile/settings', [\App\Http\Controllers\ProfileController::class, 'displaySettingsPage']);
+
+Route::post('/profile/autobid/bid', [\App\Http\Controllers\ProfileController::class, 'configureAutoBid']);
+
 
