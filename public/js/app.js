@@ -30299,6 +30299,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var API_PATH = '/api/items';
+var SINGLE_ITEM = '/item/';
 
 var Item = /*#__PURE__*/function () {
   function Item() {
@@ -30307,6 +30308,10 @@ var Item = /*#__PURE__*/function () {
 
   _createClass(Item, [{
     key: "displayBindOnLoad",
+
+    /**
+     * load initial data and bind events
+     */
     value: function displayBindOnLoad() {
       var self = this;
       $(document).ready(function () {
@@ -30314,13 +30319,17 @@ var Item = /*#__PURE__*/function () {
           var temp = self.getProcessedData(data);
           $('.item-gallery').html(temp);
           self.paginate(data);
-          self.displayOnAction();
+          self.displayOnClick();
         });
       });
     }
+    /**
+     * load data on pagination link click
+     */
+
   }, {
-    key: "displayOnAction",
-    value: function displayOnAction() {
+    key: "displayOnClick",
+    value: function displayOnClick() {
       var self = this;
       $('.pagination-links').on('click', 'button', function (e) {
         var elem = $(this);
@@ -30332,6 +30341,11 @@ var Item = /*#__PURE__*/function () {
         });
       });
     }
+    /**
+     * generate pagination link
+     * @param data
+     */
+
   }, {
     key: "paginate",
     value: function paginate(data) {
@@ -30342,6 +30356,12 @@ var Item = /*#__PURE__*/function () {
       });
       $('.pagination-links').html(paginateTemp.join(""));
     }
+    /**
+     * generate item gallery
+     * @param items
+     * @returns {string}
+     */
+
   }, {
     key: "getProcessedData",
     value: function getProcessedData(items) {
@@ -30352,11 +30372,18 @@ var Item = /*#__PURE__*/function () {
             key = _Object$entries$_i[0],
             item = _Object$entries$_i[1];
 
-        temp += "<div class=\"item-wrapper\">\n                <img src=\"".concat(item.thumbnail, "\" alt=\"product\">\n                <span>").concat(item.title, "</span>\n                <span>").concat(item.description, "</span>\n                <span>").concat(item.min_price, "</span>\n            </div>");
+        temp += "<a href=\"".concat(SINGLE_ITEM + item.id, "\"><div class=\"item-wrapper\">\n                <img src=\"").concat(item.thumbnail, "\" alt=\"product\">\n                <span>").concat(item.title, "</span>\n                <span>").concat(item.description, "</span>\n                <span>").concat(item.min_price, "</span>\n            </div></a>");
       }
 
       return temp;
     }
+    /**
+     * get items data from backend
+     * @param path
+     * @param term
+     * @returns {*}
+     */
+
   }, {
     key: "getItems",
     value: function getItems(path, term) {

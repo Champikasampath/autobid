@@ -1,9 +1,13 @@
 import Search from './search'
 
 const API_PATH = '/api/items';
+const SINGLE_ITEM = '/item/';
 
 export default class Item {
 
+    /**
+     * load initial data and bind events
+     */
     displayBindOnLoad() {
         let self = this;
         $(document).ready(function () {
@@ -11,12 +15,15 @@ export default class Item {
                 let temp = self.getProcessedData(data);
                 $('.item-gallery').html(temp);
                 self.paginate(data);
-                self.displayOnAction()
+                self.displayOnClick()
             });
         })
     }
 
-    displayOnAction() {
+    /**
+     * load data on pagination link click
+     */
+    displayOnClick() {
         let self = this;
         $('.pagination-links').on('click','button',function (e) {
             let elem = $(this);
@@ -29,6 +36,10 @@ export default class Item {
         })
     }
 
+    /**
+     * generate pagination link
+     * @param data
+     */
     paginate(data) {
         let paginateTemp = data.links.map(link => {
             if (link.url) {
@@ -38,19 +49,30 @@ export default class Item {
         $('.pagination-links').html(paginateTemp.join(""));
     }
 
+    /**
+     * generate item gallery
+     * @param items
+     * @returns {string}
+     */
     getProcessedData(items) {
         let temp = '';
         for(const [key, item] of Object.entries(items.data)) {
-            temp += `<div class="item-wrapper">
+            temp += `<a href="${SINGLE_ITEM + item.id}"><div class="item-wrapper">
                 <img src="${item.thumbnail}" alt="product">
                 <span>${ item.title }</span>
                 <span>${ item.description }</span>
                 <span>${ item.min_price }</span>
-            </div>`
+            </div></a>`
         }
         return temp;
     }
 
+    /**
+     * get items data from backend
+     * @param path
+     * @param term
+     * @returns {*}
+     */
     getItems(path, term) {
         return (new Search()).getData(path, term).then(res => res.json()).then(items => items);
     }
