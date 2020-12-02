@@ -30296,6 +30296,7 @@ var Item = /*#__PURE__*/function () {
             _this.reset();
 
             self.showMessage('Success', 'alert-success');
+            window.location.reload();
           } else {
             self.showMessage(data.error, 'alert-danger');
           }

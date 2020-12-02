@@ -32,6 +32,7 @@ export default class Item {
                     if(!data.error) {
                         this.reset();
                         self.showMessage('Success', 'alert-success');
+                        window.location.reload();
                     }
                     else {
                         self.showMessage(data.error, 'alert-danger')
