@@ -30391,6 +30391,7 @@ var Item = /*#__PURE__*/function () {
     key: "init",
     value: function init() {
       this.filter();
+      this.sort();
       this.displayBindOnLoad();
     }
     /**
@@ -30442,6 +30443,21 @@ var Item = /*#__PURE__*/function () {
         });
       });
     }
+  }, {
+    key: "sort",
+    value: function sort() {
+      var self = this;
+      $('.sort-box').change(function () {
+        var elem = $(this);
+        var sort_type = elem.val();
+        var sort = 'min_price';
+        self.getItems(API_PATH + '?page=1', '', sort, sort_type).then(function (data) {
+          var temp = self.getProcessedData(data);
+          $('.item-gallery').html(temp);
+          self.paginate(data);
+        });
+      });
+    }
     /**
      * generate pagination link
      * @param data
@@ -30479,18 +30495,20 @@ var Item = /*#__PURE__*/function () {
       return temp;
     }
     /**
-     * get items data from backend
+     *
      * @param path
      * @param term
+     * @param sort
+     * @param sort_type
      * @returns {*}
      */
 
   }, {
     key: "getItems",
     value: function getItems(path, term) {
-      console.log(path);
-      console.log(term);
-      return new _search__WEBPACK_IMPORTED_MODULE_0__["default"]().getData(path, term).then(function (res) {
+      var sort = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'id';
+      var sort_type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'DESC';
+      return new _search__WEBPACK_IMPORTED_MODULE_0__["default"]().getData(path, term, sort, sort_type).then(function (res) {
         return res.json();
       }).then(function (items) {
         return items;
@@ -30528,8 +30546,8 @@ var Search = /*#__PURE__*/function () {
 
   _createClass(Search, [{
     key: "getData",
-    value: function getData(path, term) {
-      return fetch(path + '&term=' + term);
+    value: function getData(path, term, sort, sort_type) {
+      return fetch(path + '&term=' + term + '&sort=' + sort + '&sort_type=' + sort_type);
     }
   }]);
 

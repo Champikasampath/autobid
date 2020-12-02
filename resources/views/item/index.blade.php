@@ -8,9 +8,9 @@
         <div class="container">
             <div><input type="text" name="term" class="search-box"></div>
             <div>
-                <select name="sort" id="">
-                    <option value="low">Low to High</option>
-                    <option value="high">High to Low</option>
+                <select name="sort" class="sort-box">
+                    <option value="asc">Low to High</option>
+                    <option value="desc">High to Low</option>
                 </select>
             </div>
             <div class="row item-gallery">

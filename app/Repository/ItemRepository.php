@@ -25,11 +25,13 @@ class ItemRepository
     /**
      * @param int $length
      * @param null $term
+     * @param string $sort
+     * @param string $sort_type
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      * @throws \Exception
      */
-    public function getAll($length = 10, $term = null)
+    public function getAll($length = 10, $term = null, $sort = 'id', $sort_type = 'desc')
     {
         try {
             $query = item::query();
@@ -38,7 +40,7 @@ class ItemRepository
                 $query->where('title', 'LIKE', "%$term%");
                 $query->orWhere('description', 'LIKE', "%$term%");
             }
-
+            $query->OrderBy($sort, $sort_type);
             return $query->paginate($length);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

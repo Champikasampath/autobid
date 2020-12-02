@@ -7,6 +7,7 @@ export default class Item {
 
     init() {
         this.filter();
+        this.sort();
         this.displayBindOnLoad();
     }
     /**
@@ -53,6 +54,21 @@ export default class Item {
         })
     }
 
+    sort() {
+        let self = this;
+        $('.sort-box').change(function () {
+            let elem = $(this);
+            let sort_type = elem.val();
+            let sort = 'min_price'
+            self.getItems(API_PATH + '?page=1', '', sort, sort_type).then(function (data) {
+                let temp = self.getProcessedData(data);
+                $('.item-gallery').html(temp);
+                self.paginate(data);
+            });
+        })
+    }
+
+
     /**
      * generate pagination link
      * @param data
@@ -94,15 +110,15 @@ export default class Item {
     }
 
     /**
-     * get items data from backend
+     *
      * @param path
      * @param term
+     * @param sort
+     * @param sort_type
      * @returns {*}
      */
-    getItems(path, term) {
-        console.log(path);
-        console.log(term);
-        return (new Search()).getData(path, term).then(res => res.json()).then(items => items);
+    getItems(path, term, sort = 'id', sort_type = 'DESC') {
+        return (new Search()).getData(path, term, sort, sort_type).then(res => res.json()).then(items => items);
     }
 
 

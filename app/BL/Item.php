@@ -29,14 +29,15 @@ class Item extends Core
     }
 
     /**
-     * @param int $start
      * @param int $length
      * @param string $term
+     * @param $sort
+     * @param string $sort_type
      *
      * @return mixed
      */
-    public function getAll($length = 10, $term = '')
+    public function getAll($length = 10, $term = '', $sort, $sort_type = 'desc')
     {
-        return $this->repository->getAll($length, $term);
+        return $this->repository->getAll($length, $term, $sort, $sort_type);
     }
 }
