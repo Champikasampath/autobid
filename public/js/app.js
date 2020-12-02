@@ -30446,21 +30446,14 @@ var Item = /*#__PURE__*/function () {
   }, {
     key: "getProcessedData",
     value: function getProcessedData(items) {
-      var temp = ''; // for(const [key, item] of Object.entries(items.data)) {
-      //     temp += `<a href="${SINGLE_ITEM + item.id}"><div class="item-wrapper">
-      //         <img src="${item.thumbnail}" alt="product">
-      //         <span>${ item.title }</span>
-      //         <span>${ item.description }</span>
-      //         <span>${ item.min_price }</span>
-      //     </div></a>`
-      // }
+      var temp = '';
 
       for (var _i = 0, _Object$entries = Object.entries(items.data); _i < _Object$entries.length; _i++) {
         var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
             key = _Object$entries$_i[0],
             item = _Object$entries$_i[1];
 
-        temp += "<div class=\"col-md-3 mb-5\">\n        <div class=\"card h-100\">\n          <img class=\"card-img-top\" src=\"".concat(item.thumbnail, "\" alt=\"").concat(item.title, "\">\n          <div class=\"card-body\">\n            <h4 class=\"card-title\">").concat(item.title, "</h4>\n            <p class=\"card-text\">").concat(item.description, "</p>\n            <p class=\"card-text\"><strong>Price: ").concat(item.min_price, "</strong></p>\n          </div>\n          <div class=\"card-footer\">\n            <a href=\"").concat(SINGLE_ITEM + item.id, "\" class=\"btn btn-primary\">Find Out More!</a>\n          </div>\n        </div>\n      </div>");
+        temp += "<div class=\"col-md-3 mb-5\">\n        <div class=\"card h-100\">\n          <img class=\"card-img-top\" src=\"".concat(item.thumbnail, "\" alt=\"").concat(item.title, "\">\n          <div class=\"card-body\">\n            <h4 class=\"card-title\">").concat(item.title, "</h4>\n            <p class=\"card-text\">").concat(item.description, "</p>\n            <p class=\"card-text\"><strong>Price: ").concat(item.min_price, "</strong></p>\n          </div>\n          <div class=\"card-footer\">\n            <a href=\"").concat(SINGLE_ITEM + item.id, "\" class=\"btn btn-primary\">Bid Now</a>\n          </div>\n        </div>\n      </div>");
       }
 
       return temp;

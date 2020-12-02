@@ -56,14 +56,6 @@ export default class Item {
      */
     getProcessedData(items) {
         let temp = '';
-        // for(const [key, item] of Object.entries(items.data)) {
-        //     temp += `<a href="${SINGLE_ITEM + item.id}"><div class="item-wrapper">
-        //         <img src="${item.thumbnail}" alt="product">
-        //         <span>${ item.title }</span>
-        //         <span>${ item.description }</span>
-        //         <span>${ item.min_price }</span>
-        //     </div></a>`
-        // }
 
         for(const [key, item] of Object.entries(items.data)) {
             temp += `<div class="col-md-3 mb-5">
@@ -75,7 +67,7 @@ export default class Item {
             <p class="card-text"><strong>Price: ${ item.min_price }</strong></p>
           </div>
           <div class="card-footer">
-            <a href="${SINGLE_ITEM + item.id}" class="btn btn-primary">Find Out More!</a>
+            <a href="${SINGLE_ITEM + item.id}" class="btn btn-primary">Bid Now</a>
           </div>
         </div>
       </div>`
