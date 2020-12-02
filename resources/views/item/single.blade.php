@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('parts.model')
+
     <div class="single-item">
         <span>Title : </span> <span> {{ $item->title }}</span>
         <div class="row">

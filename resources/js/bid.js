@@ -22,7 +22,21 @@ export default class Item {
                 'bid' : bid,
                 'item_id' : item_id
             }
-            return self.ajaxRequest(data);
+
+
+            self.ajaxRequest(data)
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    if(!data.error) {
+                        this.reset();
+                        self.showMessage('Success', 'alert-success');
+                    }
+                    else {
+                        self.showMessage(data.error, 'alert-danger')
+                    }
+                });
         })
     }
 
@@ -39,5 +53,16 @@ export default class Item {
             },
             body: JSON.stringify(data),
         })
+    }
+
+    showMessage(msg, cls) {
+        $(".flash-alert").addClass(cls);
+        $(".flash-alert").show();
+        $(".flash-alert .flash-message").html(msg);
+
+        setTimeout(function() {
+            $(".flash-alert").hide()
+            $(".flash-alert").removeClass(cls);
+        }, 3500);
     }
 }

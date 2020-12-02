@@ -24,7 +24,7 @@ class BidController extends Controller
             $res = Bid::init()->placeBid($data);
             return response()->json($res, 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['error' => 'Could not complete request due to server error!'], 500);
         }
     }
 

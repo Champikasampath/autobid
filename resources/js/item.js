@@ -6,9 +6,11 @@ const SINGLE_ITEM = '/item/';
 export default class Item {
 
     init() {
-        this.filter();
-        this.sort();
-        this.displayBindOnLoad();
+        if(window.location.pathname === "/") {
+            this.filter();
+            this.sort();
+            this.displayBindOnLoad();
+        }
     }
     /**
      * load initial data and bind events
@@ -16,7 +18,7 @@ export default class Item {
     displayBindOnLoad() {
         let self = this;
         $(document).ready(function () {
-            self.getItems(API_PATH + '?page=1', '').then(function (data) {
+            self.getItems(API_PATH + '?page=1', '', 'min_price').then(function (data) {
                 let temp = self.getProcessedData(data);
                 $('.item-gallery').html(temp);
                 self.paginate(data);

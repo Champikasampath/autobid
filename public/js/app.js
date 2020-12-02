@@ -30280,6 +30280,8 @@ var Item = /*#__PURE__*/function () {
     value: function bidOnSubmit() {
       var self = this;
       $('#bidding').submit(function (e) {
+        var _this = this;
+
         e.preventDefault();
         var bid = $('.bid').val();
         var item_id = $('.item_id').val();
@@ -30287,7 +30289,17 @@ var Item = /*#__PURE__*/function () {
           'bid': bid,
           'item_id': item_id
         };
-        return self.ajaxRequest(data);
+        self.ajaxRequest(data).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          if (!data.error) {
+            _this.reset();
+
+            self.showMessage('Success', 'alert-success');
+          } else {
+            self.showMessage(data.error, 'alert-danger');
+          }
+        });
       });
     }
     /**
@@ -30307,6 +30319,17 @@ var Item = /*#__PURE__*/function () {
         },
         body: JSON.stringify(data)
       });
+    }
+  }, {
+    key: "showMessage",
+    value: function showMessage(msg, cls) {
+      $(".flash-alert").addClass(cls);
+      $(".flash-alert").show();
+      $(".flash-alert .flash-message").html(msg);
+      setTimeout(function () {
+        $(".flash-alert").hide();
+        $(".flash-alert").removeClass(cls);
+      }, 3500);
     }
   }]);
 
@@ -30390,9 +30413,11 @@ var Item = /*#__PURE__*/function () {
   _createClass(Item, [{
     key: "init",
     value: function init() {
-      this.filter();
-      this.sort();
-      this.displayBindOnLoad();
+      if (window.location.pathname === "/") {
+        this.filter();
+        this.sort();
+        this.displayBindOnLoad();
+      }
     }
     /**
      * load initial data and bind events
@@ -30403,7 +30428,7 @@ var Item = /*#__PURE__*/function () {
     value: function displayBindOnLoad() {
       var self = this;
       $(document).ready(function () {
-        self.getItems(API_PATH + '?page=1', '').then(function (data) {
+        self.getItems(API_PATH + '?page=1', '', 'min_price').then(function (data) {
           var temp = self.getProcessedData(data);
           $('.item-gallery').html(temp);
           self.paginate(data);
