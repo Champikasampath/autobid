@@ -43,6 +43,9 @@ export default class Item {
         })
     }
 
+    /**
+     * search
+     */
     filter() {
         let self = this;
         $('.search-box').keyup(function (e) {
