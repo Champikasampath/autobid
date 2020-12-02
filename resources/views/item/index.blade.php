@@ -6,7 +6,7 @@
 
     <section>
         <div class="container">
-            <div><input type="text" name="term" class="search-box"></div>
+            <div><input type="text" name="term" class="search-box" placeholder="Search"></div>
             <div>
                 <select name="sort" class="sort-box">
                     <option value="asc">Low to High</option>

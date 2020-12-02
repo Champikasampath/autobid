@@ -13,12 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\ItemController::class, 'index']);
 
-Route::get('/item/{id}', [\App\Http\Controllers\ItemController::class, 'displayItemDetailsPage']);
 
-Route::get('/profile/settings', [\App\Http\Controllers\ProfileController::class, 'displaySettingsPage']);
+Route::get('/login', [\App\Http\Controllers\LoginController::class, 'displayLoginPage'])->name('login');
+Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login']);
+Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout']);
 
-Route::post('/profile/autobid/bid', [\App\Http\Controllers\ProfileController::class, 'configureAutoBid']);
+Route::middleware(['auction'])->group(function () {
+    Route::get('/', [\App\Http\Controllers\ItemController::class, 'index']);
 
+    Route::get('/item/{id}', [\App\Http\Controllers\ItemController::class, 'displayItemDetailsPage']);
+
+    Route::get('/profile/settings', [\App\Http\Controllers\ProfileController::class, 'displaySettingsPage']);
+
+    Route::post('/profile/autobid/bid', [\App\Http\Controllers\ProfileController::class, 'configureAutoBid']);
+});
 
