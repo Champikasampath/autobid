@@ -27,10 +27,13 @@ class ItemController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-
     }
 
-
+    /**
+     * @param $id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function displayItemDetailsPage($id)
     {
         $item = Item::init()->get($id);

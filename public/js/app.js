@@ -30234,7 +30234,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.$ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 
-new _item__WEBPACK_IMPORTED_MODULE_0__["default"]().displayBindOnLoad();
+new _item__WEBPACK_IMPORTED_MODULE_0__["default"]().init();
 new _bid__WEBPACK_IMPORTED_MODULE_1__["default"]().init();
 
 /***/ }),
@@ -30388,11 +30388,17 @@ var Item = /*#__PURE__*/function () {
   }
 
   _createClass(Item, [{
-    key: "displayBindOnLoad",
-
+    key: "init",
+    value: function init() {
+      this.filter();
+      this.displayBindOnLoad();
+    }
     /**
      * load initial data and bind events
      */
+
+  }, {
+    key: "displayBindOnLoad",
     value: function displayBindOnLoad() {
       var self = this;
       $(document).ready(function () {
@@ -30422,6 +30428,20 @@ var Item = /*#__PURE__*/function () {
         });
       });
     }
+  }, {
+    key: "filter",
+    value: function filter() {
+      var self = this;
+      $('.search-box').keyup(function (e) {
+        var elem = $(this);
+        var value = elem.val();
+        self.getItems(API_PATH + '?page=1', value).then(function (data) {
+          var temp = self.getProcessedData(data);
+          $('.item-gallery').html(temp);
+          self.paginate(data);
+        });
+      });
+    }
     /**
      * generate pagination link
      * @param data
@@ -30431,7 +30451,7 @@ var Item = /*#__PURE__*/function () {
     key: "paginate",
     value: function paginate(data) {
       var paginateTemp = data.links.map(function (link) {
-        if (link.url) {
+        if (link.url && data.per_page < data.total) {
           return "<button class=\"active-".concat(link.active, " pagination-link-a\" data-path=\"").concat(link.url, "\">").concat(link.label, "</button>");
         }
       });
@@ -30453,7 +30473,7 @@ var Item = /*#__PURE__*/function () {
             key = _Object$entries$_i[0],
             item = _Object$entries$_i[1];
 
-        temp += "<div class=\"col-md-3 mb-5\">\n        <div class=\"card h-100\">\n          <img class=\"card-img-top\" src=\"".concat(item.thumbnail, "\" alt=\"").concat(item.title, "\">\n          <div class=\"card-body\">\n            <h4 class=\"card-title\">").concat(item.title, "</h4>\n            <p class=\"card-text\">").concat(item.description, "</p>\n            <p class=\"card-text\"><strong>Price: ").concat(item.min_price, "</strong></p>\n          </div>\n          <div class=\"card-footer\">\n            <a href=\"").concat(SINGLE_ITEM + item.id, "\" class=\"btn btn-primary\">Bid Now</a>\n          </div>\n        </div>\n      </div>");
+        temp += "<div class=\"col-md-3 mb-5\">\n                        <div class=\"card h-100\">\n                          <img class=\"card-img-top\" src=\"".concat(item.thumbnail, "\" alt=\"").concat(item.title, "\">\n                          <div class=\"card-body\">\n                            <h4 class=\"card-title\">").concat(item.title, "</h4>\n                            <p class=\"card-text\">").concat(item.description, "</p>\n                            <p class=\"card-text\"><strong>Price: ").concat(item.min_price, "</strong></p>\n                          </div>\n                          <div class=\"card-footer\">\n                            <a href=\"").concat(SINGLE_ITEM + item.id, "\" class=\"btn btn-primary\">Bid Now</a>\n                          </div>\n                        </div>\n                      </div>");
       }
 
       return temp;
@@ -30468,6 +30488,8 @@ var Item = /*#__PURE__*/function () {
   }, {
     key: "getItems",
     value: function getItems(path, term) {
+      console.log(path);
+      console.log(term);
       return new _search__WEBPACK_IMPORTED_MODULE_0__["default"]().getData(path, term).then(function (res) {
         return res.json();
       }).then(function (items) {
