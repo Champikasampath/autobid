@@ -1,3 +1,5 @@
+import Timer from "tiny-timer/dist/tiny-timer";
+
 const API_PATH = '/api/bid/';
 
 export default class Item {
@@ -6,7 +8,26 @@ export default class Item {
      * initiate
      */
     init() {
-        this.bidOnSubmit()
+        this.bidOnSubmit();
+        this.countDown();
+    }
+
+    countDown() {
+        const timer = new Timer();
+
+        timer.on('tick', (ms) => {
+            $('.countdown-timer').empty();
+            $('.countdown-timer').html(ms);
+        })
+        timer.on('done', () => {
+            $('#bidding').hide();
+            $('.countdown-timer').html("<span style='color: red'>Times Up!</span>");
+        });
+        timer.on('statusChanged', (status) => {
+
+        })
+
+        timer.start(5000) // run for 5 seconds
     }
 
     /**

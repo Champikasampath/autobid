@@ -26,7 +26,7 @@
                     {{--TODO: replace hardcoded user id--}}
                     <input type="submit" class="submit-bid" value="Bid">
                 </form>
-
+                <div class="countdown-timer"></div>
             </div>
         </div>
     </div>
