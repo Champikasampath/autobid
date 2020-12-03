@@ -1,5 +1,4 @@
 import Search from './search'
-import Timer from 'tiny-timer'
 
 const API_PATH = '/api/items';
 const SINGLE_ITEM = '/item/';

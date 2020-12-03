@@ -13,7 +13,9 @@ export default class Item {
     }
 
     countDown() {
-        let countDownDate = new Date('2021-01-05 15:37:25').getTime();
+        let bidend = $("#bid_end").attr('data-bidend');
+
+        let countDownDate = new Date(bidend).getTime();//TODO:remove hardcoded
 
         // Update the count down every 1 second
         setInterval(function() {
@@ -63,7 +65,9 @@ export default class Item {
                     if(!data.error) {
                         this.reset();
                         self.showMessage('Success', 'alert-success');
-                        window.location.reload();
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 2000)
                     }
                     else {
                         self.showMessage(data.error, 'alert-danger')

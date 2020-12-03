@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::middleware(['web'])->group(function () {
+    Route::get('/login', [\App\Http\Controllers\LoginController::class, 'displayLoginPage'])->name('login');
+    Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login']);
+    Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout']);
+});
 
-Route::get('/login', [\App\Http\Controllers\LoginController::class, 'displayLoginPage'])->name('login');
-Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login']);
-Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout']);
-
-Route::middleware(['auction'])->group(function () {
+Route::middleware(['web', 'auction'])->group(function () {
     Route::get('/', [\App\Http\Controllers\ItemController::class, 'index']);
 
     Route::get('/item/{id}', [\App\Http\Controllers\ItemController::class, 'displayItemDetailsPage']);

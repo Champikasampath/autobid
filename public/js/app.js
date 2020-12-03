@@ -30728,107 +30728,6 @@ module.exports = Timer;
 
 /***/ }),
 
-/***/ "./node_modules/tiny-timer/dist/tiny-timer.module.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/tiny-timer/dist/tiny-timer.module.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! events */ "./node_modules/events/events.js");
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
-
-
-class Timer extends events__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"] {
-  constructor({
-    interval = 1000,
-    stopwatch = false
-  } = {}) {
-    super();
-    this._duration = 0;
-    this._endTime = 0;
-    this._pauseTime = 0;
-    this._status = 'stopped';
-
-    this.tick = () => {
-      if (this.status === 'paused') return;
-
-      if (Date.now() >= this._endTime) {
-        this.stop();
-        this.emit('tick', this._stopwatch ? this._duration : 0);
-        this.emit('done');
-      } else {
-        this.emit('tick', this.time);
-      }
-    };
-
-    this._interval = interval;
-    this._stopwatch = stopwatch;
-  }
-
-  start(duration, interval) {
-    if (this.status !== 'stopped') return;
-    if (duration == null) throw new TypeError('Must provide duration parameter');
-    this._duration = duration;
-    this._endTime = Date.now() + duration;
-
-    this._changeStatus('running');
-
-    this.emit('tick', this._stopwatch ? 0 : this._duration);
-    this._timeoutID = setInterval(this.tick, interval || this._interval);
-  }
-
-  stop() {
-    if (this._timeoutID) clearInterval(this._timeoutID);
-
-    this._changeStatus('stopped');
-  }
-
-  pause() {
-    if (this.status !== 'running') return;
-    this._pauseTime = Date.now();
-
-    this._changeStatus('paused');
-  }
-
-  resume() {
-    if (this.status !== 'paused') return;
-    this._endTime += Date.now() - this._pauseTime;
-    this._pauseTime = 0;
-
-    this._changeStatus('running');
-  }
-
-  _changeStatus(status) {
-    this._status = status;
-    this.emit('statusChanged', this.status);
-  }
-
-  get time() {
-    if (this.status === 'stopped') return 0;
-    const time = this.status === 'paused' ? this._pauseTime : Date.now();
-    const left = this._endTime - time;
-    return this._stopwatch ? this._duration - left : left;
-  }
-
-  get duration() {
-    return this._duration;
-  }
-
-  get status() {
-    return this._status;
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Timer);
-//# sourceMappingURL=tiny-timer.module.js.map
-
-
-/***/ }),
-
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -30964,7 +30863,9 @@ var Item = /*#__PURE__*/function () {
   }, {
     key: "countDown",
     value: function countDown() {
-      var countDownDate = new Date('2021-01-05 15:37:25').getTime(); // Update the count down every 1 second
+      var bidend = $("#bid_end").attr('data-bidend');
+      var countDownDate = new Date(bidend).getTime(); //TODO:remove hardcoded
+      // Update the count down every 1 second
 
       setInterval(function () {
         var now = new Date().getTime();
@@ -31009,7 +30910,9 @@ var Item = /*#__PURE__*/function () {
             _this.reset();
 
             self.showMessage('Success', 'alert-success');
-            window.location.reload();
+            setTimeout(function () {
+              window.location.reload();
+            }, 2000);
           } else {
             self.showMessage(data.error, 'alert-danger');
           }
@@ -31097,7 +31000,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Item; });
 /* harmony import */ var _search__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search */ "./resources/js/search.js");
-/* harmony import */ var tiny_timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tiny-timer */ "./node_modules/tiny-timer/dist/tiny-timer.module.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -31115,7 +31017,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 
 
 var API_PATH = '/api/items';
