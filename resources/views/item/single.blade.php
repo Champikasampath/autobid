@@ -9,7 +9,6 @@
     <div class="single-item">
         <span>Title : </span> <span> {{ $item->title }}</span>
         <div class="row">
-
             <div class="col-md-8">
                 <img class="img-fluid" src="{{ $item->thumbnail }}" alt="{{ $item->title }}">
             </div>
@@ -26,8 +25,36 @@
                     {{--TODO: replace hardcoded user id--}}
                     <input type="submit" class="submit-bid" value="Bid">
                 </form>
-                <div class="countdown-timer"></div>
+                <p><strong>Expires in</strong></p>
+                <div class="countdown-timer" style="color: darkblue; font-style: oblique"></div>
             </div>
+        </div>
+        <div class="row">
+            <h3>Bidding history</h3>
+        </div>
+        <div class="row">
+            <table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Bid</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($item->bids as $k => $bid)
+                            <tr>
+                                <th scope="row">{{ $k }}</th>
+                                <td>{{ $bid->bid }}</td>
+                                <td>{{ \App\BL\User::init()->getByid($bid->bidder_id)['name'] }}</td>
+                                <td>{{ $bid->created_at }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </table>
         </div>
     </div>
 @endsection

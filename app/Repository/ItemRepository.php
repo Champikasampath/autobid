@@ -16,7 +16,9 @@ class ItemRepository
     public function get($id)
     {
         try {
-            return Item::with('bids')->where('id', $id)->first();
+            return Item::with('bids')
+                       ->where('id', $id)
+                       ->first();
         } catch (\Exception $e) {
             return $e->getMessage();
         }

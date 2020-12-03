@@ -30964,17 +30964,25 @@ var Item = /*#__PURE__*/function () {
   }, {
     key: "countDown",
     value: function countDown() {
-      var timer = new tiny_timer_dist_tiny_timer__WEBPACK_IMPORTED_MODULE_0___default.a();
-      timer.on('tick', function (ms) {
-        $('.countdown-timer').empty();
-        $('.countdown-timer').html(ms);
-      });
-      timer.on('done', function () {
-        $('#bidding').hide();
-        $('.countdown-timer').html("<span style='color: red'>Times Up!</span>");
-      });
-      timer.on('statusChanged', function (status) {});
-      timer.start(5000); // run for 5 seconds
+      var countDownDate = new Date('2021-01-05 15:37:25').getTime(); // Update the count down every 1 second
+
+      setInterval(function () {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor(distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+        var minutes = Math.floor(distance % (1000 * 60 * 60) / (1000 * 60));
+        var seconds = Math.floor(distance % (1000 * 60) / 1000);
+        var counter = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        var elem = $('.countdown-timer');
+        elem.empty();
+        elem.html(counter);
+
+        if (distance < 0) {
+          clearInterval(x);
+          elem.html("<span style='color: red'>Times Up!</span>");
+        }
+      }, 1000);
     }
     /**
      * bind on submit event for bidding
@@ -30994,7 +31002,7 @@ var Item = /*#__PURE__*/function () {
           'bid': bid,
           'item_id': item_id
         };
-        self.ajaxRequest(data).then(function (res) {
+        self.ajaxRequest(API_PATH, data).then(function (res) {
           return res.json();
         }).then(function (data) {
           if (!data.error) {
@@ -31016,8 +31024,8 @@ var Item = /*#__PURE__*/function () {
 
   }, {
     key: "ajaxRequest",
-    value: function ajaxRequest(data) {
-      return fetch(API_PATH, {
+    value: function ajaxRequest(path, data) {
+      return fetch(path, {
         method: 'POST',
         // or 'PUT'
         headers: {

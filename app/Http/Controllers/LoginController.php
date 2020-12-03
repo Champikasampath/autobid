@@ -9,16 +9,12 @@ class LoginController extends Controller
     /**
      * @var array
      */
-    private $auctionUsers = [
-        'user1' => [
-            'id' => 1,
-            'password' => 'user1'
-        ],
-        'user2' => [
-            'id' => 2,
-            'password' => 'user2'
-        ]
-    ];
+    private $auctionUsers = [];
+
+    public function __construct()
+    {
+        $this->auctionUsers = config('auction.users');
+    }
 
     /**
      * @param Request $request

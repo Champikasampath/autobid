@@ -14,8 +14,8 @@ class AlterTableItemAddStartEndTimeFields extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->timestamp('bid_start')->nullable();
-            $table->timestamp('bid_end')->nullable();
+            $table->dateTime('bid_start')->nullable();
+            $table->dateTime('bid_end')->nullable();
         });
     }
 

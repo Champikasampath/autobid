@@ -13,21 +13,31 @@ export default class Item {
     }
 
     countDown() {
-        const timer = new Timer();
+        let countDownDate = new Date('2021-01-05 15:37:25').getTime();
 
-        timer.on('tick', (ms) => {
-            $('.countdown-timer').empty();
-            $('.countdown-timer').html(ms);
-        })
-        timer.on('done', () => {
-            $('#bidding').hide();
-            $('.countdown-timer').html("<span style='color: red'>Times Up!</span>");
-        });
-        timer.on('statusChanged', (status) => {
+        // Update the count down every 1 second
+        setInterval(function() {
 
-        })
+            let now = new Date().getTime();
 
-        timer.start(5000) // run for 5 seconds
+            let distance = countDownDate - now;
+
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            let counter = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            let elem = $('.countdown-timer');
+            elem.empty();
+            elem.html(counter);
+
+            if (distance < 0) {
+                clearInterval(x);
+                elem.html("<span style='color: red'>Times Up!</span>");
+            }
+        }, 1000);
     }
 
     /**
@@ -45,7 +55,7 @@ export default class Item {
             }
 
 
-            self.ajaxRequest(data)
+            self.ajaxRequest(API_PATH, data)
                 .then(res => {
                     return res.json();
                 })
@@ -67,8 +77,8 @@ export default class Item {
      * @param data
      * @returns {Promise<Response>}
      */
-    ajaxRequest(data) {
-        return fetch(API_PATH , {
+    ajaxRequest(path, data) {
+        return fetch(path , {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
