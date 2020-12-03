@@ -29,6 +29,7 @@
                 <div class="countdown-timer" style="color: darkblue; font-style: oblique"></div>
             </div>
         </div>
+        <hr/>
         <div class="row">
             <h3>Bidding history</h3>
         </div>
