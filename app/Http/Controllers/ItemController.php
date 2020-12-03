@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\BL\AutoBid;
 use App\BL\Bid;
 use App\BL\Item;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         return view('item.index');
@@ -35,15 +39,22 @@ class ItemController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function displayItemDetailsPage($id)
+    public function displayItemDetailsPage(Request $request, $id)
     {
         $item = Item::init()->get($id);
         $item['highest_bid'] = Bid::init()->getHighestBidByItem($id);
         view()->share('item', $item);
+
+        $user = $request->session()->get('AuctionUser');
+
+        $autoBid = AutoBid::init()->get($user['id'], $id);
+        view()->share('auto_bid', $autoBid);
+
         return view('item.single');
     }
 }

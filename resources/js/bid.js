@@ -8,12 +8,13 @@ export default class Item {
     init() {
         this.bidOnSubmit();
         this.countDown();
+        this.enableAutoBidding();
     }
 
     countDown() {
         let bidend = $("#bid_end").attr('data-bidend');
 
-        let countDownDate = new Date('2020-12-03 21:46').getTime();//TODO:remove hardcoded
+        let countDownDate = new Date(bidend).getTime();//TODO:remove hardcoded
 
         // Update the count down every 1 second
         let x = setInterval(function() {
@@ -21,8 +22,6 @@ export default class Item {
             let now = new Date().getTime();
 
             let distance = countDownDate - now;
-
-            console.log(distance);
 
             let days = Math.floor(distance / (1000 * 60 * 60 * 24));
             let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -57,7 +56,6 @@ export default class Item {
                 'item_id' : item_id
             }
 
-
             self.ajaxRequest(API_PATH, data)
                 .then(res => {
                     return res.json();
@@ -75,6 +73,18 @@ export default class Item {
                     }
                 });
         })
+    }
+
+    enableAutoBidding() {
+        let self = this;
+        $('#autobidding').change(function() {
+            let data = {
+                'is_checked' : this.checked,
+                'item_id' : $('.item_id').val(),
+            };
+            self.ajaxRequest(API_PATH + 'enable-auto-bid', data)
+        });
+
     }
 
     /**

@@ -32,7 +32,11 @@
                 </p>
                 <div>
                     <label for="autobidding">Enable Auto Bidding</label>
-                    <input type="checkbox" class="autobidding" name="autobidding">
+                    <input id="autobidding" type="checkbox" class="autobidding" name="autobidding"
+                        @if(isset($auto_bid))
+                           checked="checked"
+                        @endif
+                    >
                 </div>
             </div>
         </div>

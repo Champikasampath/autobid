@@ -30271,18 +30271,18 @@ var Item = /*#__PURE__*/function () {
     value: function init() {
       this.bidOnSubmit();
       this.countDown();
+      this.enableAutoBidding();
     }
   }, {
     key: "countDown",
     value: function countDown() {
       var bidend = $("#bid_end").attr('data-bidend');
-      var countDownDate = new Date('2020-12-03 21:46').getTime(); //TODO:remove hardcoded
+      var countDownDate = new Date(bidend).getTime(); //TODO:remove hardcoded
       // Update the count down every 1 second
 
       var x = setInterval(function () {
         var now = new Date().getTime();
         var distance = countDownDate - now;
-        console.log(distance);
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor(distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
         var minutes = Math.floor(distance % (1000 * 60 * 60) / (1000 * 60));
@@ -30331,6 +30331,18 @@ var Item = /*#__PURE__*/function () {
             self.showMessage(data.error, 'alert-danger');
           }
         });
+      });
+    }
+  }, {
+    key: "enableAutoBidding",
+    value: function enableAutoBidding() {
+      var self = this;
+      $('#autobidding').change(function () {
+        var data = {
+          'is_checked': this.checked,
+          'item_id': $('.item_id').val()
+        };
+        self.ajaxRequest(API_PATH + 'enable-auto-bid', data);
       });
     }
     /**

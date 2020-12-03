@@ -17,4 +17,35 @@ class AutoBid extends Core
     {
         parent::__construct(app(AutoBidRepository::class));
     }
+
+    /**
+     * @param $data
+     *
+     * @return mixed
+     */
+    public function create($data)
+    {
+        return $this->repository->create($data);
+    }
+
+    /**
+     * @param $data
+     *
+     * @return mixed
+     */
+    public function delete($data)
+    {
+        return $this->repository->delete($data);
+    }
+
+    /**
+     * @param $user_id
+     * @param $item_id
+     *
+     * @return mixed
+     */
+    public function get($user_id, $item_id)
+    {
+        return $this->repository->get($user_id, $item_id);
+    }
 }
