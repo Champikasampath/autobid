@@ -27,6 +27,6 @@ Route::middleware(['web', 'auction'])->group(function () {
 
     Route::get('/profile/settings', [\App\Http\Controllers\ProfileController::class, 'displaySettingsPage']);
 
-    Route::post('/profile/autobid/bid', [\App\Http\Controllers\ProfileController::class, 'configureAutoBid']);
+    Route::post('/profile/autobid/config', [\App\Http\Controllers\ProfileController::class, 'configureAutoBid']);
 });
 

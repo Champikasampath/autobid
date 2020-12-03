@@ -1,5 +1,3 @@
-import Timer from "tiny-timer/dist/tiny-timer";
-
 const API_PATH = '/api/bid/';
 
 export default class Item {
@@ -15,14 +13,16 @@ export default class Item {
     countDown() {
         let bidend = $("#bid_end").attr('data-bidend');
 
-        let countDownDate = new Date(bidend).getTime();//TODO:remove hardcoded
+        let countDownDate = new Date('2020-12-03 21:46').getTime();//TODO:remove hardcoded
 
         // Update the count down every 1 second
-        setInterval(function() {
+        let x = setInterval(function() {
 
             let now = new Date().getTime();
 
             let distance = countDownDate - now;
+
+            console.log(distance);
 
             let days = Math.floor(distance / (1000 * 60 * 60 * 24));
             let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -37,6 +37,7 @@ export default class Item {
 
             if (distance < 0) {
                 clearInterval(x);
+                $("#bidding").hide();
                 elem.html("<span style='color: red'>Times Up!</span>");
             }
         }, 1000);

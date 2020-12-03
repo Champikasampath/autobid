@@ -18,6 +18,7 @@ Abstract class Core
 
     /**
      * Core constructor.
+     * @param $repository
      */
     public function __construct($repository)
     {

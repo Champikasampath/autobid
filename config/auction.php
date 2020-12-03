@@ -12,6 +12,11 @@ return [
             'id' => 2,
             'name' => 'User 2',
             'password' => 'user2'
+        ],
+        'user3' => [
+            'id' => 3,
+            'name' => 'User 3',
+            'password' => 'user3'
         ]
     ]
 

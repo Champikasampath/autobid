@@ -24,12 +24,12 @@
                     @csrf
                     <input type="text" class="bid" name="bid" required>
                     <input type="hidden" name="item_id" class="item_id" value="{{ $item->id }}">
-
-                    {{--TODO: replace hardcoded user id--}}
-                    <input type="submit" class="submit-bid" value="Bid">
+                    <input type="submit" class="submit-bid" value="Submit bid">
                 </form>
                 <p><strong>Expires in</strong></p>
-                <p><div class="countdown-timer" style="color: darkblue; font-style: oblique"></div></p>
+                <p>
+                <div class="countdown-timer" style="color: darkblue; font-style: oblique"></div>
+                </p>
                 <div>
                     <label for="autobidding">Enable Auto Bidding</label>
                     <input type="checkbox" class="autobidding" name="autobidding">
@@ -45,22 +45,22 @@
             <table>
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Bid</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Time</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Bid</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Time</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach($item->bids as $k => $bid)
-                            <tr>
-                                <th scope="row">{{ $k }}</th>
-                                <td>{{ $bid->bid }}</td>
-                                <td>{{ \App\BL\User::init()->getByid($bid->bidder_id)['name'] }}</td>
-                                <td>{{ $bid->created_at }}</td>
-                            </tr>
-                        @endforeach
+                    @foreach($item->bids as $k => $bid)
+                        <tr>
+                            <th scope="row">{{ $k }}</th>
+                            <td>{{ $bid->bid }}</td>
+                            <td>{{ \App\BL\User::init()->getByid($bid->bidder_id)['name'] }}</td>
+                            <td>{{ $bid->created_at }}</td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </table>

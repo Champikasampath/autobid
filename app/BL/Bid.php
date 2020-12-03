@@ -39,4 +39,5 @@ class Bid extends Core
     {
         return $this->repository->getHighestBidByItem($item_id);
     }
+
 }
