@@ -33,7 +33,7 @@
                 <div>
                     <label for="autobidding">Enable Auto Bidding</label>
                     <input id="autobidding" type="checkbox" class="autobidding" name="autobidding"
-                        @if(isset($auto_bid))
+                        @if(isset($auto_bid) && !$auto_bid->isEmpty())
                            checked="checked"
                         @endif
                     >

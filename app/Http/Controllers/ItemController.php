@@ -53,6 +53,7 @@ class ItemController extends Controller
         $user = $request->session()->get('AuctionUser');
 
         $autoBid = AutoBid::init()->get($user['id'], $id);
+
         view()->share('auto_bid', $autoBid);
 
         return view('item.single');

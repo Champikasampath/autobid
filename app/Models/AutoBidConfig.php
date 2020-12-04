@@ -13,6 +13,7 @@ class AutoBidConfig extends Model
 
     protected $fillable = [
         'user_id',
-        'max_bid_amount'
+        'max_bid_amount',
+        'remaining_credit',
     ];
 }

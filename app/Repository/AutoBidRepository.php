@@ -54,4 +54,24 @@ class AutoBidRepository
         return AutoBid::where('item_id', $item_id)->where('user_id', $user_id)->get();
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function getUsersByItemId($item_id, $user_id)
+    {
+        return AutoBid::with('config')
+                      ->join('auto_bidding_configs', 'auto_bidding_configs.user_id', '=', 'auto_biddings.user_id')
+                      ->where('auto_biddings.item_id', $item_id)
+                      ->whereNotIn('auto_biddings.user_id', [$user_id])
+                      ->orderByRaw('(auto_bidding_configs.max_bid_amount - auto_bidding_configs.used_credit) ASC')
+                      ->get();
+    }
+
+    public function getNumberOfAutoBidItemsByUser($id)
+    {
+        return AutoBid::where('user_id', $id)
+                      ->count('item_id');
+    }
 }

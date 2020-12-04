@@ -25,13 +25,38 @@ class AutoBidConfig extends Core
     {
         $data = [
             'user_id' => $user_id,
-            'max_bid_amount' => $amount
+            'max_bid_amount' => $amount,
         ];
         return $this->repository->create($data);
     }
 
+    /**
+     * @param $user_id
+     *
+     * @return mixed
+     */
     public function get($user_id)
     {
         return $this->repository->get($user_id);
+    }
+
+    /**
+     * @param $user_id
+     * @param $amount
+     *
+     * @return mixed
+     */
+    public function updateUsedCredit($user_id, $amount)
+    {
+        return $this->repository->updateUsedCredit($user_id, $amount);
+    }
+
+    /**
+     * @param $user_id
+     *
+     * @return mixed
+     */
+    public function hasAutoBidCredit($user_id) {
+        return $this->repository->hasAutoBidCredit($user_id);
     }
 }

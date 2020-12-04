@@ -41,4 +41,19 @@ class BidRepository
             throw new \Exception($e->getMessage());
         }
     }
+
+    /**
+     * @param $item_id
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getHighestBidder($item_id)
+    {
+        try {
+            return Bid::where('item_id', $item_id)->orderBy('bid', 'desc')->first();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

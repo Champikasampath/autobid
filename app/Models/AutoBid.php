@@ -15,4 +15,9 @@ class AutoBid extends Model
         'item_id',
         'user_id'
     ];
+
+    public function config()
+    {
+        return $this->hasOne('App\Models\AutoBidConfig', 'user_id', 'user_id');
+    }
 }
