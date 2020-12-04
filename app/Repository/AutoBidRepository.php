@@ -64,6 +64,7 @@ class AutoBidRepository
         return AutoBid::with('config')
                       ->join('auto_bidding_configs', 'auto_bidding_configs.user_id', '=', 'auto_biddings.user_id')
                       ->where('auto_biddings.item_id', $item_id)
+                      ->whereRaw('(auto_bidding_configs.max_bid_amount - auto_bidding_configs.used_credit) > 0')
                       ->whereNotIn('auto_biddings.user_id', [$user_id])
                       ->orderByRaw('(auto_bidding_configs.max_bid_amount - auto_bidding_configs.used_credit) ASC')
                       ->get();

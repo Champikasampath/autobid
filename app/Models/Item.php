@@ -11,6 +11,6 @@ class Item extends Model
 
     public function bids()
     {
-        return $this->hasMany('App\Models\Bid')->orderBy('created_at', 'desc');
+        return $this->hasMany('App\Models\Bid')->orderBy('id', 'desc');
     }
 }

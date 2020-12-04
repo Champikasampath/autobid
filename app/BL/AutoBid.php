@@ -77,7 +77,6 @@ class AutoBid extends Core
      * @param int $increment
      *
      * @return mixed
-     * TODO:implement a queue
      */
     public function placeAutoBid($item_id, $auto_bidding_user_id, $current_bid, $increment = 1)
     {
